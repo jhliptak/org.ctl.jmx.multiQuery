@@ -32,6 +32,7 @@ public class jmxMonitor {
 	private String attributeKey, infoKey;
     private String methodName;
 	private String object;
+	private String UOM = "";
 	private String username, password;
 	private List additionalArgs = new ArrayList<String>();
 	private boolean disableWarnCrit = false;
@@ -172,6 +173,9 @@ public class jmxMonitor {
                 else if(option.equals("-password")) {
 					password = args[++i];
 				}
+                else if(option.equals("-UOM")) {
+                	UOM = args[++i];
+                }
                 else if(option.equals("-default")) {
                     String strValue = args[++i];
                     try {
@@ -305,7 +309,7 @@ public class jmxMonitor {
             	jmxAttr.put("Value", checkData.toString());
             	jmxAttr.put(keyName, checkData.toString());
                 if ( checkData instanceof Number) {
-                    jmxAttr.put("perfData", keyName +"="+ checkData.toString() +thresholds+";;");
+                    jmxAttr.put("perfData", keyName +"="+ checkData.toString() + UOM + thresholds+";;");
                 }
             }
             else {
@@ -314,7 +318,7 @@ public class jmxMonitor {
             	jmxAttr.put("Value", checkData.toString());
                 jmxAttr.put(keyName, checkData.toString());
                 if ( checkData instanceof Number) {
-                    jmxAttr.put("perfData", keyName +"="+ checkData.toString()+thresholds+";;");
+                    jmxAttr.put("perfData", keyName +"="+ checkData.toString()+ UOM + thresholds+";;");
                 }
                 shown=true;
             }
@@ -410,4 +414,10 @@ public class jmxMonitor {
     {
         return ex.getCause() == null ? ex : rootCause(ex.getCause());
     }
+	public String getUOM() {
+		return UOM;
+	}
+	public void setUOM(String uOM) {
+		UOM = uOM;
+	}
 }

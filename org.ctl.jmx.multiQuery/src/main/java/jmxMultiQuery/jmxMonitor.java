@@ -34,6 +34,7 @@ public class jmxMonitor {
 	private String attributeKey, infoKey;
     private String methodName;
 	private String object;
+	private String UOM="";
 	private String username, password;
 	private List additionalArgs = new ArrayList<String>();
 	private List <String>calc = new ArrayList<String>();
@@ -181,6 +182,9 @@ public class jmxMonitor {
                 else if(option.equals("-password")) {
 					password = args[++i];
 				}
+                else if(option.equals("-UOM")) {
+                	UOM = args[++i];
+                }
                 else if(option.equals("-default")) {
                     String strValue = args[++i];
                     try {
@@ -333,7 +337,7 @@ public class jmxMonitor {
             	jmxAttr.put("Value", checkData.toString());
             	jmxAttr.put(keyName, checkData.toString());
                 if ( checkData instanceof Number) {
-                    jmxAttr.put("perfData", keyName +"="+ checkData.toString() +thresholds+";;");
+                    jmxAttr.put("perfData", keyName +"="+ checkData.toString() +UOM + thresholds+";;");
                 }
             }
             else {
@@ -342,7 +346,7 @@ public class jmxMonitor {
             	jmxAttr.put("Value", checkData.toString());
                 jmxAttr.put(keyName, checkData.toString());
                 if ( checkData instanceof Number) {
-                    jmxAttr.put("perfData", keyName +"="+ checkData.toString()+thresholds+";;");
+                    jmxAttr.put("perfData", keyName +"="+ checkData.toString()+ UOM + thresholds+";;");
                 }
                 shown=true;
             }
@@ -394,6 +398,7 @@ public class jmxMonitor {
 		}
 
 	public int report(Exception ex) {
+		ex.printStackTrace();
 		StringBuilder eReport = new StringBuilder();
 		if(ex instanceof ParseError){
 			eReport.append(UNKNOWN_STRING+" ");
@@ -406,8 +411,8 @@ public class jmxMonitor {
 			eReport.append(CRITICAL_STRING+" ");
 			eReport.append(reportException(ex, eReport));		
 			eReport.append("");
-			printHelp();
 			System.out.println(eReport.toString());
+			printHelp();
 			return RETURN_CRITICAL;
 		}
 	}
@@ -489,5 +494,11 @@ public class jmxMonitor {
 	private String decimalPlaces(Float num){
 		DecimalFormat df = new DecimalFormat("###.##");
 		return df.format(num);
+	}
+	public String getUOM() {
+		return UOM;
+	}
+	public void setUOM(String uOM) {
+		UOM = uOM;
 	}
 }

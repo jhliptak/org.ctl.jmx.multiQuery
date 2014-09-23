@@ -52,6 +52,11 @@ Options are:
         Take # of samples, wait for # of ms, and calculate the difference over time.
         CPU usage (warn 95%): -O java.lang:type=OperatingSystem -A ProcessCpuTime -r Cpu% -samples 2,2000,getDiffOverTime -calc *100 -c 95
 
+ -UOM
+        allows for a specified UOM.  The most common will be the "c" value which is used for a monotonically 
+        increasing value like number of requests or number of GC cycles.
+        Otherwise you get a wedge graph that is hard to read.
+        
 Note that if warning level > critical, system checks object attribute value to be LESS THAN OR EQUAL warning, critical
 If warning level < critical, system checks object attribute value to be MORE THAN OR EQUAL warning, critical 
 	

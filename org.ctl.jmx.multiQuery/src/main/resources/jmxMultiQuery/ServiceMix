@@ -1,0 +1,8 @@
+-U  service:jmx:rmi://0.0.0.0:44444/jndi/rmi://0.0.0.0:1099/karaf-root 
+-username admin -password security 
+-O java.lang:type=Threading 
+-A ThreadCount -r LiveThreads 
+-add "-A PeakThreadCount -r liveThreadsMax" 
+-add "-A DaemonThreadCount -r DaemonThreads"   
+-O "java.lang:type=GarbageCollector,name=PS Scavenge" -A CollectionCount
+ -x
